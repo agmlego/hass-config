@@ -1,0 +1,78 @@
+- action:
+  - data:
+      entity_id: group.exterior_lights
+    service: homeassistant.turn_on
+  alias: Exterior Lights On Sunset
+  id: 6c0e8b5e-7b34-4788-b688-7281bf38c1f1
+  condition: []
+  trigger:
+  - event: sunset
+    offset: -00:30:00
+    platform: sun
+- action:
+  - data:
+      entity_id: group.exterior_lights
+    service: homeassistant.turn_off
+  alias: Exterior Lights Off Sunset
+  id: bcc267ca-a7b2-4d91-87f2-4a33084c7003
+  condition: []
+  trigger:
+  - event: sunset
+    offset: 02:00:00
+    platform: sun
+- action:
+  - data:
+      entity_id: group.exterior_lights
+    service: homeassistant.turn_on
+  alias: Exterior Lights On Sunrise
+  id: 38784e20-d61a-4a25-949d-906abe934f20
+  condition: []
+  trigger:
+  - event: sunrise
+    offset: -01:00:00
+    platform: sun
+- action:
+  - data:
+      entity_id: group.exterior_lights
+    service: homeassistant.turn_off
+  alias: Exterior Lights Off Sunrise
+  id: 7fe29d59-4d1a-489c-a744-719739b66718
+  condition: []
+  trigger:
+  - event: sunrise
+    offset: 00:30:00
+    platform: sun
+- action:
+    data:
+      entity_id: group.exterior_lights
+    service: homeassistant.turn_on
+  alias: Lights on Return Home
+  condition:
+  - after: sunset
+    before: sunrise
+    condition: sun
+  id: e9e17fc8-bcfb-40ea-b964-8c1399718976
+  trigger:
+  - entity_id: device_tracker.9888b8344f47385657
+    platform: zone
+    zone: zone.home
+    event: enter
+  - entity_id: device_tracker.samsungsmg891a
+    from: not_home
+    platform: state
+    to: home
+- action:
+  - data:
+      entity_id: group.lights
+    service: homeassistant.turn_off
+  alias: Lights off Leave Home
+  id: 677c52be-2bdd-405f-9c21-dca63719f20d
+  trigger:
+  - entity_id: device_tracker.9888b8344f47385657
+    event: leave
+    platform: zone
+    zone: zone.home
+  - entity_id: device_tracker.samsungsmg891a
+    from: home
+    platform: state
+    to: not_home

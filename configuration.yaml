@@ -1,0 +1,136 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  latitude: 42.663230
+  longitude: -83.347272
+  elevation: 293.0
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Detroit
+  # Customization file
+  customize: !include customize.yaml
+
+# Zones
+zone:
+  - name: Home
+    latitude: 42.663230
+    longitude: -83.347272
+    radius: 100
+    icon: mdi:home-assistant
+  - name: LEONI
+    latitude: 42.716529
+    longitude: -83.239388
+    radius: 100
+    icon: mdi:briefcase
+  - name: FormFab
+    latitude: 42.640810
+    longitude: -83.193728
+    radius: 100
+    icon: mdi:briefcase
+  - name: i3Detroit
+    latitude: 42.4538034
+    longitude: -83.1138062
+    radius: 100
+    icon: mdi:codepen
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  api_password: !secret http_password
+  trusted_networks:
+      - 10.11.12.0/24
+  ip_ban_enabled: True
+  login_attempts_threshold: 5
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# InfluxDB
+influxdb:
+
+# Track the sun
+sun:
+
+# Weather prediction
+sensor:
+  - platform: darksky
+    api_key: !secret dark_sky_key
+    monitored_conditions:
+        - summary
+        - icon
+        - temperature
+        - temperature_max
+        - temperature_min
+        - humidity
+        - wind_speed
+        - wind_bearing
+  - platform: apcupsd
+    resources:
+      - bcharge
+      - battv
+      - numxfers
+      - status
+      - timeleft
+      - tonbatt
+
+# Nest integration
+nest:
+    client_id: !secret nest_client_id
+    client_secret: !secret nest_client_secret
+
+# TP-LINK Switches
+switch:
+  - platform: tplink
+    host: 10.11.12.11
+    name: Front Door Light
+  - platform: tplink
+    host: 10.11.12.12
+    name: Kitchen Door Light
+
+
+# Device Trackers
+device_tracker:
+ - platform: unifi
+   username: !secret unifi_user
+   password: !secret unifi_pass
+   verify_ssl: true
+   interval: 15
+   new_device_defaults:
+     track_new_devices: true
+     hide_if_away: false
+ - platform: gpslogger
+
+# APCUPSd
+apcupsd:
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
