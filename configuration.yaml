@@ -87,12 +87,15 @@ sensor:
         - wind_bearing
   - platform: apcupsd
     resources:
-      - bcharge
-      - battv
-      - numxfers
-      - status
-      - timeleft
-      - tonbatt
+        - status
+        - bcharge
+        - timeleft
+        - battv
+        - numxfers
+        - xonbatt
+        - tonbatt
+        - cumonbatt
+        - xoffbatt
 
 # Nest integration
 nest:
