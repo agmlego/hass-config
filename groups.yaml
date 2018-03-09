@@ -98,3 +98,41 @@ tracker:
         - device_tracker.inanna
         - device_tracker.9888b8344f47385657
         - device_tracker.samsungsmg891a
+
+fridges:
+    view: yes
+    icon: mdi:fridge
+    entities:
+        - group.pow_00
+        - group.pow_01
+        - group.pow_02
+
+pow_00:
+    icon: mdi:developer-board
+    entities:
+        - device_tracker.pow00
+        - sensor.voltage_pow00
+        - sensor.current_pow00
+        - sensor.power_pow00
+        - sensor.energy_pow00
+        - sensor.temperature_pow00
+
+pow_01:
+    icon: mdi:developer-board
+    entities:
+        - device_tracker.pow01
+        - sensor.voltage_pow01
+        - sensor.current_pow01
+        - sensor.power_pow01
+        - sensor.energy_pow01
+        - sensor.temperature_pow01
+
+pow_02:
+    icon: mdi:developer-board
+    entities:
+        - device_tracker.pow02
+        - sensor.voltage_pow02
+        - sensor.current_pow02
+        - sensor.power_pow02
+        - sensor.energy_pow02
+        - sensor.temperature_pow02
