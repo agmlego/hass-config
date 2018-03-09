@@ -43,20 +43,20 @@
     offset: 00:30:00
     platform: sun
 - action:
-    data:
+  - data:
       entity_id: group.exterior_lights
     service: homeassistant.turn_on
   alias: Lights on Return Home
   condition:
   - after: sunset
-    before: sunrise
+    after_offset: 00:00
     condition: sun
   id: e9e17fc8-bcfb-40ea-b964-8c1399718976
   trigger:
   - entity_id: device_tracker.9888b8344f47385657
+    event: enter
     platform: zone
     zone: zone.home
-    event: enter
   - entity_id: device_tracker.samsungsmg891a
     from: not_home
     platform: state

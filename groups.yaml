@@ -1,14 +1,5 @@
-default_view:
-    view: yes
-    icon: mdi:home
-    entities:
-        - group.fire
-        - group.climate
-        - group.weather
-        - group.rack
-        - group.lights
-        - group.tracker
 fire:
+    view: yes
     icon: mdi:alarm-bell
     entities:
         - group.alarm_co
@@ -49,6 +40,7 @@ alarm_online:
         - binary_sensor.master_bedroom_nest_protect_online
 
 climate:
+    view: yes
     icon: mdi:air-conditioner
     entities:
         - climate.living_room_emily
@@ -59,6 +51,7 @@ climate:
         - sensor.living_room_thermostat_emily_humidity
 
 weather:
+    view: yes
     icon: mdi:weather-snowy-rainy
     entities:
         - sun.sun
@@ -72,6 +65,7 @@ weather:
         - sensor.dark_sky_wind_bearing
 
 rack:
+    view: yes
     icon: mdi:server-network
     entities:
         - sensor.ups_status
@@ -85,6 +79,7 @@ rack:
         - sensor.ups_transfer_to_battery
 
 lights:
+    view: yes
     icon: mdi:lightbulb
     entities:
         - group.exterior_lights
@@ -96,6 +91,7 @@ exterior_lights:
         - switch.kitchen_door_light
 
 tracker:
+    view: yes
     icon: mdi:radar
     entities:
         - device_tracker.agmlegos8

@@ -48,8 +48,26 @@ http:
       - 10.11.12.0/24
   ip_ban_enabled: True
   login_attempts_threshold: 5
+  ssl_certificate: /etc/letsencrypt/live/frondeur.noip.me/fullchain.pem
+  ssl_key: /etc/letsencrypt/live/frondeur.noip.me/privkey.pem
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
+
+mqtt:
+  broker: 10.11.12.3
+  port: 1883
+  client_id: hass
+  keepalive: 60
+  birth_message:
+    topic: "tele/home/hass/LWT"
+    payload: "Online"
+    qos: 1
+    retain: true
+  will_message:
+    topic: "tele/home/hass/LWT"
+    payload: "Offline"
+    qos: 1
+    retain: true
 
 # Checks for available updates
 updater:
@@ -96,6 +114,81 @@ sensor:
         - tonbatt
         - cumonbatt
         - xoffbatt
+  - platform: mqtt
+    name: "Energy POW-00"
+    state_topic: "tele/home/inside/power/pow-00/ENERGY"
+    value_template: '{{ value_json["Today"] }}'
+    unit_of_measurement: "kWh"
+  - platform: mqtt
+    name: "Power POW-00"
+    state_topic: "tele/home/inside/power/pow-00/ENERGY"
+    value_template: '{{ value_json["Power"] }}'
+    unit_of_measurement: "W"
+  - platform: mqtt
+    name: "Voltage POW-00"
+    state_topic: "tele/home/inside/power/pow-00/ENERGY"
+    value_template: '{{ value_json["Voltage"] }}'
+    unit_of_measurement: "V"
+  - platform: mqtt
+    name: "Current POW-00"
+    state_topic: "tele/home/inside/power/pow-00/ENERGY"
+    value_template: '{{ value_json["Current"] }}'
+    unit_of_measurement: "A"
+  - platform: mqtt
+    name: "Temperature POW-00"
+    state_topic: "tele/home/inside/power/pow-00/SENSOR"
+    value_template: '{{ value_json["DS18B20"]["Temperature"] }}'
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Energy POW-01"
+    state_topic: "tele/home/inside/power/pow-01/ENERGY"
+    value_template: '{{ value_json["Today"] }}'
+    unit_of_measurement: "kWh"
+  - platform: mqtt
+    name: "Power POW-01"
+    state_topic: "tele/home/inside/power/pow-01/ENERGY"
+    value_template: '{{ value_json["Power"] }}'
+    unit_of_measurement: "W"
+  - platform: mqtt
+    name: "Voltage POW-01"
+    state_topic: "tele/home/inside/power/pow-01/ENERGY"
+    value_template: '{{ value_json["Voltage"] }}'
+    unit_of_measurement: "V"
+  - platform: mqtt
+    name: "Current POW-01"
+    state_topic: "tele/home/inside/power/pow-01/ENERGY"
+    value_template: '{{ value_json["Current"] }}'
+    unit_of_measurement: "A"
+  - platform: mqtt
+    name: "Temperature POW-01"
+    state_topic: "tele/home/inside/power/pow-01/SENSOR"
+    value_template: '{{ value_json["DS18B20"]["Temperature"] }}'
+    unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Energy POW-02"
+    state_topic: "tele/home/inside/power/pow-02/ENERGY"
+    value_template: '{{ value_json["Today"] }}'
+    unit_of_measurement: "kWh"
+  - platform: mqtt
+    name: "Power POW-02"
+    state_topic: "tele/home/inside/power/pow-02/ENERGY"
+    value_template: '{{ value_json["Power"] }}'
+    unit_of_measurement: "W"
+  - platform: mqtt
+    name: "Voltage POW-02"
+    state_topic: "tele/home/inside/power/pow-02/ENERGY"
+    value_template: '{{ value_json["Voltage"] }}'
+    unit_of_measurement: "V"
+  - platform: mqtt
+    name: "Current POW-02"
+    state_topic: "tele/home/inside/power/pow-02/ENERGY"
+    value_template: '{{ value_json["Current"] }}'
+    unit_of_measurement: "A"
+  - platform: mqtt
+    name: "Temperature POW-02"
+    state_topic: "tele/home/inside/power/pow-02/SENSOR"
+    value_template: '{{ value_json["DS18B20"]["Temperature"] }}'
+    unit_of_measurement: "°C"
 
 # Nest integration
 nest:
@@ -117,7 +210,7 @@ device_tracker:
  - platform: unifi
    username: !secret unifi_user
    password: !secret unifi_pass
-   verify_ssl: true
+   verify_ssl: false
    interval: 15
    new_device_defaults:
      track_new_devices: true
