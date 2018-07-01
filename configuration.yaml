@@ -189,6 +189,9 @@ sensor:
     state_topic: "tele/home/inside/power/pow-02/SENSOR"
     value_template: '{{ value_json["DS18B20"]["Temperature"] }}'
     unit_of_measurement: "°C"
+  - platform: dte_energy_bridge
+    ip: 10.11.12.177
+    version: 2
 
 # Nest integration
 nest:
