@@ -78,3 +78,14 @@
     from: home
     platform: state
     to: not_home
+- action:
+  - data:
+      entity_id: switch.kitchen_water_filter_change
+    service: homeassistant.turn_on
+  alias: Kitchen Filter Change Notice
+  condition: []
+  id: '1533417528548'
+  trigger:
+  - above: '243'
+    entity_id: sensor.kitchen_water_filter_use
+    platform: numeric_state

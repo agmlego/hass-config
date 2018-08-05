@@ -136,3 +136,11 @@ pow_02:
         - sensor.power_pow02
         - sensor.energy_pow02
         - sensor.temperature_pow02
+
+water_filter:
+    view: yes
+    icon: mdi:cup-water
+    entities:
+        - binary_sensor.kitchen_water_filter_reset
+        - sensor.kitchen_water_filter_use
+        - switch.kitchen_water_filter_change_notice

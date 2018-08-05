@@ -51,7 +51,7 @@ http:
   ssl_certificate: /etc/letsencrypt/live/frondeur.noip.me/fullchain.pem
   ssl_key: /etc/letsencrypt/live/frondeur.noip.me/privkey.pem
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-  # base_url: example.duckdns.org:8123
+  base_url: frondeur.noip.me:8123
 
 mqtt:
   broker: 10.11.12.3
@@ -189,9 +189,31 @@ sensor:
     state_topic: "tele/home/inside/power/pow-02/SENSOR"
     value_template: '{{ value_json["DS18B20"]["Temperature"] }}'
     unit_of_measurement: "°C"
+  - platform: mqtt
+    name: "Kitchen Water Filter Flow"
+    state_topic: "stat/home/inside/First Floor/Kitchen/water-filter/flow-meter"
+    force_update: True
   - platform: dte_energy_bridge
     ip: 10.11.12.177
     version: 2
+  - platform: influxdb
+    host: localhost
+    username: homeassistant
+    password: homeassistant
+    queries:
+    - name: "Kitchen Water Filter Use"
+      unit_of_measurement: "gal"
+      value_template: '{{ (value | float / 7144) | round(2) }}'
+      group_function: sum
+      where: "time > {{ states.sensor.kitchen_water_filter_reset.last_updated }}"
+      measurement: '"sensor.kitchen_water_filter_flow"'
+      field: value
+      database: home_assistant
+
+binary_sensor:
+  - platform: mqtt
+    name: "Kitchen Water Filter Reset"
+    state_topic: "stat/home/inside/First Floor/Kitchen/water-filter/reset"
 
 # Nest integration
 nest:
@@ -206,7 +228,11 @@ switch:
   - platform: tplink
     host: 10.11.12.12
     name: Kitchen Door Light
-
+  - platform: mqtt
+    name: "Kitchen Water Filter Change Notice"
+    command_topic: "cmnd/home/inside/First Floor/Kitchen/water-filter/change"
+    payload_on: "ON"
+    payload_off: "OFF"
 
 # Device Trackers
 device_tracker:
