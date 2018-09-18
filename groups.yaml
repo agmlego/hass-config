@@ -144,3 +144,16 @@ water_filter:
         - binary_sensor.kitchen_water_filter_reset
         - sensor.kitchen_water_filter_use
         - switch.kitchen_water_filter_change_notice
+
+garage:
+    icon: mdi:garage
+    entities:
+        - binary_sensor.garage_bay_door
+        - binary_sensor.garage_man_door
+        - binary_sensor.garage_window
+
+doors:
+    view: yes
+    icon: mdi:door
+    entities:
+        - group.garage

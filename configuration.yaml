@@ -210,7 +210,29 @@ sensor:
       field: value
       database: home_assistant
 
+# Doors
 binary_sensor:
+  - platform: mqtt
+    name: 'Garage Bay Door'
+    payload_on: "DEA60A"
+    payload_off: "DEA60E"
+    device_class: garage_door
+    state_topic: 'tele/home/outside/Outdoor/Garage/rf-bridge/RESULT'
+    value_template: "{{ value_json.RfReceived.RfKey }}"
+  - platform: mqtt
+    name: 'Garage Man Door'
+    payload_on: "86360A"
+    payload_off: "86360E"
+    device_class: door
+    state_topic: 'tele/home/outside/Outdoor/Garage/rf-bridge/RESULT'
+    value_template: "{{ value_json.RfReceived.RfKey }}"
+  - platform: mqtt
+    name: 'Garage Window'
+    payload_on: "C74F0A"
+    payload_off: "C74F0E"
+    device_class: window
+    state_topic: 'tele/home/outside/Outdoor/Garage/rf-bridge/RESULT'
+    value_template: "{{ value_json.RfReceived.RfKey }}"
   - platform: mqtt
     name: "Kitchen Water Filter Reset"
     state_topic: "stat/home/inside/First Floor/Kitchen/water-filter/reset"
