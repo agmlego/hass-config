@@ -89,6 +89,7 @@ exterior_lights:
     entities:
         - switch.front_door_light
         - switch.kitchen_door_light
+        - switch.outdoor_aux_lighting
 
 tracker:
     view: yes

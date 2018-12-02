@@ -217,21 +217,21 @@ binary_sensor:
     payload_on: "DEA60A"
     payload_off: "DEA60E"
     device_class: garage_door
-    state_topic: 'tele/home/outside/Outdoor/Garage/rf-bridge/RESULT'
+    state_topic: 'tele/home/outside/Outdoor/Garage/rf-b/RESULT'
     value_template: "{{ value_json.RfReceived.RfKey }}"
   - platform: mqtt
     name: 'Garage Man Door'
     payload_on: "86360A"
     payload_off: "86360E"
     device_class: door
-    state_topic: 'tele/home/outside/Outdoor/Garage/rf-bridge/RESULT'
+    state_topic: 'tele/home/outside/Outdoor/Garage/rf-b/RESULT'
     value_template: "{{ value_json.RfReceived.RfKey }}"
   - platform: mqtt
     name: 'Garage Window'
     payload_on: "C74F0A"
     payload_off: "C74F0E"
     device_class: window
-    state_topic: 'tele/home/outside/Outdoor/Garage/rf-bridge/RESULT'
+    state_topic: 'tele/home/outside/Outdoor/Garage/rf-b/RESULT'
     value_template: "{{ value_json.RfReceived.RfKey }}"
   - platform: mqtt
     name: "Kitchen Water Filter Reset"
@@ -255,6 +255,19 @@ switch:
     command_topic: "cmnd/home/inside/First Floor/Kitchen/water-filter/change"
     payload_on: "ON"
     payload_off: "OFF"
+  - platform: mqtt
+    name: "Outdoor Aux Lighting"
+    icon: mdi:track-light
+    command_topic: "cmnd/home/outside/Outdoor/Aux/aux_lighting/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_topic: "stat/home/outside/Outdoor/Aux/aux_lighting/POWER"
+    state_on: "ON"
+    state_off: "OFF"
+    availability_topic: "tele/home/outside/Outdoor/Aux/aux_lighting/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+
 
 # Device Trackers
 device_tracker:
