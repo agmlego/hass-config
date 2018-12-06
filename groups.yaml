@@ -68,15 +68,18 @@ rack:
     view: yes
     icon: mdi:server-network
     entities:
-        - sensor.ups_status
-        - sensor.ups_battery
+        - sensor.ups_status_data
+        - sensor.ups_battery_charge
         - sensor.ups_battery_voltage
-        - sensor.ups_time_on_battery
-        - sensor.ups_total_time_on_battery
-        - sensor.ups_time_left
-        - sensor.ups_transfer_count
-        - sensor.ups_transfer_from_battery
-        - sensor.ups_transfer_to_battery
+        - sensor.ups_battery_chemistry
+        - sensor.ups_battery_runtime
+        - sensor.ups_load_reboot_timer
+        - sensor.ups_load_shutdown_timer
+        - sensor.ups_ups_shutdown_delay
+        - sensor.ups_low_battery_runtime
+        - sensor.ups_low_battery_setpoint
+        - sensor.ups_warning_battery_setpoint
+        - sensor.ups_nominal_battery_voltage
 
 lights:
     view: yes
@@ -138,6 +141,15 @@ pow_02:
         - sensor.energy_pow02
         - sensor.temperature_pow02
 
+block_heater:
+    icon: mdi:radiator
+    entities:
+        - switch.block_heater
+        - sensor.voltage_block_heater
+        - sensor.current_block_heater
+        - sensor.power_block_heater
+        - sensor.energy_block_heater
+
 water_filter:
     view: yes
     icon: mdi:cup-water
@@ -152,6 +164,7 @@ garage:
         - binary_sensor.garage_bay_door
         - binary_sensor.garage_man_door
         - binary_sensor.garage_window
+        - group.block_heater
 
 doors:
     view: yes

@@ -103,17 +103,24 @@ sensor:
         - humidity
         - wind_speed
         - wind_bearing
-  - platform: apcupsd
+  - platform: nut
+    name: ups
+    host: localhost
+    alias: ups
     resources:
-        - status
-        - bcharge
-        - timeleft
-        - battv
-        - numxfers
-        - xonbatt
-        - tonbatt
-        - cumonbatt
-        - xoffbatt
+        - battery.charge
+        - battery.charge.low
+        - battery.charge.warning
+        - battery.runtime
+        - battery.runtime.low
+        - battery.type
+        - battery.voltage
+        - battery.voltage.nominal
+        - ups.delay.shutdown
+        - ups.status
+        - ups.timer.reboot
+        - ups.timer.shutdown
+          #        - ups.status.display
   - platform: mqtt
     name: "Energy POW-00"
     state_topic: "tele/home/inside/power/pow-00/ENERGY"
@@ -190,6 +197,26 @@ sensor:
     value_template: '{{ value_json["DS18B20"]["Temperature"] }}'
     unit_of_measurement: "°C"
   - platform: mqtt
+    name: "Energy Block Heater"
+    state_topic: "tele/home/outside/Outdoor/Garage/block-hea/SENSOR"
+    value_template: '{{ value_json["ENERGY"]["Today"] }}'
+    unit_of_measurement: "kWh"
+  - platform: mqtt
+    name: "Power Block Heater"
+    state_topic: "tele/home/outside/Outdoor/Garage/block-hea/SENSOR"
+    value_template: '{{ value_json["ENERGY"]["Power"] }}'
+    unit_of_measurement: "W"
+  - platform: mqtt
+    name: "Voltage Block Heater"
+    state_topic: "tele/home/outside/Outdoor/Garage/block-hea/SENSOR"
+    value_template: '{{ value_json["ENERGY"]["Voltage"] }}'
+    unit_of_measurement: "V"
+  - platform: mqtt
+    name: "Current Block Heater"
+    state_topic: "tele/home/outside/Outdoor/Garage/block-hea/SENSOR"
+    value_template: '{{ value_json["ENERGY"]["Current"] }}'
+    unit_of_measurement: "A"
+  - platform: mqtt
     name: "Kitchen Water Filter Flow"
     state_topic: "stat/home/inside/First Floor/Kitchen/water-filter/flow-meter"
     force_update: True
@@ -236,6 +263,9 @@ binary_sensor:
   - platform: mqtt
     name: "Kitchen Water Filter Reset"
     state_topic: "stat/home/inside/First Floor/Kitchen/water-filter/reset"
+  - platform: workday
+    country: US
+    province: MI
 
 # Nest integration
 nest:
@@ -267,7 +297,18 @@ switch:
     availability_topic: "tele/home/outside/Outdoor/Aux/aux_lighting/LWT"
     payload_available: "Online"
     payload_not_available: "Offline"
-
+  - platform: mqtt
+    name: "Block Heater"
+    icon: mdi:radiator
+    command_topic: "cmnd/home/outside/Outdoor/Garage/block-hea/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    state_topic: "stat/home/outside/Outdoor/Garage/block-hea/POWER"
+    state_on: "ON"
+    state_off: "OFF"
+    availability_topic: "tele/home/outside/Outdoor/Garage/block-hea/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
 
 # Device Trackers
 device_tracker:
@@ -280,9 +321,6 @@ device_tracker:
      track_new_devices: true
      hide_if_away: false
  - platform: gpslogger
-
-# APCUPSd
-apcupsd:
 
 # Text to speech
 tts:

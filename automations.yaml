@@ -89,3 +89,19 @@
   - above: '243'
     entity_id: sensor.kitchen_water_filter_use
     platform: numeric_state
+- action:
+  - data:
+      entity_id: switch.block_heater
+    service: switch.turn_on
+  alias: Block Heater Weekday
+  condition:
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: numeric_state
+      entity_id: sensor.dark_sky_temperature
+      below: '5'
+  id: '1544066780497'
+  trigger:
+  - at: 05:00:00
+    platform: time
