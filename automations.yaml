@@ -89,19 +89,39 @@
   - above: '243'
     entity_id: sensor.kitchen_water_filter_use
     platform: numeric_state
-- action:
-  - data:
-      entity_id: switch.block_heater
-    service: switch.turn_on
-  alias: Block Heater Weekday
-  condition:
-    - condition: state
-      entity_id: binary_sensor.workday_sensor
-      state: 'on'
-    - condition: numeric_state
-      entity_id: sensor.dark_sky_temperature
-      below: '5'
+- alias: Block Heater Weekday
   id: '1544066780497'
   trigger:
-  - at: 05:00:00
-    platform: time
+  - platform: time
+    at: 05:00:00
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  - condition: numeric_state
+    entity_id: sensor.dark_sky_temperature
+    below: '35'
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.block_heater
+- alias: Block Heater Error-Proof
+  id: 5ed75204-0353-11e9-8eb2-f2801f1b9fd1
+  trigger:
+  - platform: state
+    entity_id: switch.block_heater
+    from: 'off'
+    to: 'on'
+  - platform: numeric_state
+    entity_id: sensor.current_block_heater
+    below: 2.0
+    for:
+        seconds: 30
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.block_heater
+  - service: notify.agmlego
+    data:
+      message: "Block heater failed to reach current!"
+

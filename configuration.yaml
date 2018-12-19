@@ -329,6 +329,12 @@ tts:
 # Cloud
 cloud:
 
+# Notifications
+notify:
+  - name: agmlego
+    platform: simplepush
+    device_key: 82eLB4
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
