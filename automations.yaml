@@ -112,11 +112,12 @@
     entity_id: switch.block_heater
     from: 'off'
     to: 'on'
-  - platform: numeric_state
+    for:
+      seconds: 30
+  condition:
+  - condition: numeric_state
     entity_id: sensor.current_block_heater
     below: 2.0
-    for:
-        seconds: 30
   action:
   - service: switch.turn_off
     data:
