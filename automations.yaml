@@ -78,17 +78,20 @@
     from: home
     platform: state
     to: not_home
-- action:
-  - data:
-      entity_id: switch.kitchen_water_filter_change
-    service: homeassistant.turn_on
+- id: '1533417528548'
   alias: Kitchen Filter Change Notice
-  condition: []
-  id: '1533417528548'
   trigger:
   - above: '243'
     entity_id: sensor.kitchen_water_filter_use
     platform: numeric_state
+  condition: []
+  action:
+  - data:
+      entity_id: switch.kitchen_water_filter_change
+    service: homeassistant.turn_on
+  - data:
+      message: Change kitchen water filter!
+    service: notify.agmlego
 - alias: Block Heater Weekday
   id: '1544066780497'
   trigger:
@@ -124,5 +127,4 @@
       entity_id: switch.block_heater
   - service: notify.agmlego
     data:
-      message: "Block heater failed to reach current!"
-
+      message: Block heater failed to reach current!
