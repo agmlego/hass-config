@@ -92,7 +92,11 @@ influxdb:
 # Track the sun
 sun:
 
-# Weather prediction
+# Weather predictions
+weather:
+  - platform: darksky
+    api_key: !secret dark_sky_key
+
 sensor:
   - platform: darksky
     api_key: !secret dark_sky_key
@@ -100,8 +104,8 @@ sensor:
         - summary
         - icon
         - temperature
-        - temperature_max
-        - temperature_min
+        - temperature_high
+        - temperature_low
         - humidity
         - wind_speed
         - wind_bearing
@@ -247,21 +251,21 @@ binary_sensor:
     payload_off: "DEA60E"
     device_class: garage_door
     state_topic: 'tele/home/outside/Outdoor/Garage/rf-b/RESULT'
-    value_template: "{{ value_json.RfReceived.RfKey }}"
+    value_template: "{{ value_json['RfReceived']['RfKey'] }}"
   - platform: mqtt
     name: 'Garage Man Door'
     payload_on: "86360A"
     payload_off: "86360E"
     device_class: door
     state_topic: 'tele/home/outside/Outdoor/Garage/rf-b/RESULT'
-    value_template: "{{ value_json.RfReceived.RfKey }}"
+    value_template: "{{ value_json['RfReceived']['RfKey'] }}"
   - platform: mqtt
     name: 'Garage Window'
     payload_on: "C74F0A"
     payload_off: "C74F0E"
     device_class: window
     state_topic: 'tele/home/outside/Outdoor/Garage/rf-b/RESULT'
-    value_template: "{{ value_json.RfReceived.RfKey }}"
+    value_template: "{{ value_json['RfReceived']['RfKey'] }}"
   - platform: mqtt
     name: "Kitchen Water Filter Reset"
     state_topic: "stat/home/inside/First Floor/Kitchen/water-filter/reset"

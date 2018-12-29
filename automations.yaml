@@ -128,3 +128,15 @@
   - service: notify.agmlego
     data:
       message: Block heater failed to reach current!
+- id: '1545662750783'
+  alias: Garage Door Testing
+  trigger:
+  - entity_id: binary_sensor.garage_man_door
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      message: Garage door opened!
+    service: notify.agmlego
