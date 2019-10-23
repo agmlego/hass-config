@@ -332,7 +332,7 @@ device_tracker:
 notify:
   - name: agmlego
     platform: simplepush
-    device_key: 82eLB4
+    device_key: j45nZj
 
 group: !include groups.yaml
 automation: !include automations.yaml
